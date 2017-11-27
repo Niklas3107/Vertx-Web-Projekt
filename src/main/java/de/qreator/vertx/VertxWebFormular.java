@@ -32,18 +32,20 @@ public class VertxWebFormular {
                 response.putHeader("content-type", "application/json");
                 JsonObject jo = new JsonObject();
                 
-                
-                if (typ.equals("namenKnopf")) {
-                    jo.put("typ", "antwort");
-                    jo.put("text", "Der Text war "+name);
-                    
-                
-                    jo.put("passwort", "Der Text war "+passwort);
-                }
-                response.end(Json.encodePrettily(jo));
-                
-                
+              if (typ.equals("namenKnopf") && passwort.equals  ("Passwort")) {
+                jo.put("typ", "antwort");
+                jo.put("text", "Hallo " + name);        
+                jo.put("passwort", "Anmeldung erfolgreich! ");
+            }
+            else{
+                jo.put("text", "Anmeldung für "  + name+ " fehlgeschlagen");
+                jo.put("passwort", " Passwort ungültig!");
+            }
+            response.end(Json.encodePrettily(jo));
         });
+    
+                
+        
 
         // statische html-Dateien werden über den Dateipfad static ausgeliefert
         router.route("/static/*").handler(StaticHandler.create().setDefaultContentEncoding("UTF-8"));
